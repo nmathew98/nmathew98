@@ -14,12 +14,25 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 				\ 'coc-prettier',
 				\ 'coc-tsserver',
 				\ 'coc-conjure',
-				\ '@yaegassy/coc-tailwindcss3'
+				\ 'coc-clojure',
+				\ '@yaegassy/coc-tailwindcss3',
+				\ 'coc-go',
+				\ 'coc-eslint',
+				\ 'coc-git'
 				\ ]
 
-	Plug 'arcticicestudio/nord-vim' " nord theme
+	Plug 'wojciechkepka/vim-github-dark' " github dark theme
+	Plug 'vim-airline/vim-airline' " status line
 	Plug 'liuchengxu/vim-better-default' " better defaults
+	Plug 'ervandew/supertab' " tab insert completion
+	Plug 'nathanaelkane/vim-indent-guides' " display indent levels
+	Plug 'dense-analysis/ale' " linting
 
+	Plug 'Olical/conjure' " conjure
+
+	" javascript, typescript
+	Plug 'elzr/vim-json' " json highlighting
+	Plug 'othree/html5.vim' " html5 syntax
 	Plug 'leafgarland/typescript-vim' " ts highlighting
 	Plug 'peitalin/vim-jsx-typescript' " jsx highlighting
 	Plug 'pangloss/vim-javascript' " js highlighting
@@ -27,11 +40,20 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'gregsexton/MatchTag' " match html tags
 	Plug 'yaegassy/coc-tailwindcss3' " tailwindcss
 
-	Plug 'Olical/conjure' " conjure
+	" clojure
+	Plug 'tpope/vim-dispatch'
+	Plug 'clojure-vim/vim-jack-in'
+	Plug 'radenling/vim-dispatch-neovim'
+
+	" scala
 	Plug 'nvim-lua/plenary.nvim' " for nvim-metals
 	Plug 'scalameta/nvim-metals' " scala metals lsp
 
-	Plug 'w0rp/ale' " linting
+	" go
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+	" terraform
+	Plug 'hashivim/vim-terraform'
 
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy search
 	Plug 'junegunn/fzf.vim' " fzf search integration
@@ -39,6 +61,10 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'psliwka/vim-smoothie' " smooth scrolling
 	Plug 'preservim/nerdtree' " file explorer
 	Plug 'ryanoasis/vim-devicons' " icons
+	Plug 'timakro/vim-yadi' " auto detect indent
+	Plug 'ap/vim-buftabline' " tabs
+	Plug 'vifm/vifm.vim' " file finder
+	Plug 'airblade/vim-gitgutter' " show git markers
 call plug#end()
 
 " theming support
@@ -46,9 +72,10 @@ if (has("termguicolors"))
 	set termguicolors
 endif
 
+autocmd BufRead * DetectIndent " auto detect indentation
 runtime! plugin/default.vim " allows overriding vim-better-default
 set background=dark " dark background
-colorscheme nord " nord colorscheme
+colorscheme ghdark " github dark
 syntax on " syntax highlighting
 
 set showmatch " show matching brackets
@@ -63,14 +90,19 @@ set encoding=UTF-8 " text-encoding
 set number " enable numbers on the left
 set title " tab title as file name
 
+let g:indent_guides_enable_on_vim_startup = 1 " enable indent guides on startup
+
 " ALE config
-let g:ale_linters = {
-            \ 'clojure': ['clj-kondo', 'joker'],
-            \ 'javascript': ['prettier', 'eslint'],
-            \ 'javascriptreact': ['prettier', 'eslint'],
-            \ 'typescript': ['prettier', 'eslint'],
-            \ 'typescriptreact': ['prettier', 'eslint'],
-            \ }
+let g:ale_fixers = {
+			\ 'css': ['prettier'],
+			\ 'clojure': ['clj-kondo', 'joker'],
+			\ 'javascript': ['prettier', 'eslint'],
+			\ 'javascriptreact': ['prettier', 'eslint'],
+			\ 'typescript': ['prettier', 'eslint'],
+			\ 'typescriptreact': ['prettier', 'eslint'],
+			\ 'go': ['gofmt', 'golint'],
+			\ 'scala': ['scalafmt']
+			\ }
 let g:ale_fix_on_save = 1 " fix on save
 
 " NERDTree config

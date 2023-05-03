@@ -1,20 +1,5 @@
 {
-    "coc.preferences.formatOnSaveFileTypes": [
-        "javascript",
-        "typescript",
-        "typescriptreact",
-        "json",
-        "javascriptreact",
-        "typescript.tsx"
-    ],
-    "eslint.filetypes": [
-        "javascript",
-        "typescript",
-        "typescriptreact",
-        "javascriptreact",
-        "typescript.tsx"
-    ],
-    "coc.preferences.diagnostic.virtualText": true,
-    "snippets.ultisnips.pythonPrompt": false
+	"diagnostic.displayByAle": true,
+	"snippets.ultisnips.pythonPrompt": false,
+	"git.addGBlameToVirtualText": true
 }
-
